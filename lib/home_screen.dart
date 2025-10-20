@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 TitleLargeMedium(title: 'Flash Sale 12.12'),
                 SizedBox(
-                  height: 268,
+                  height: 300,
                   child: ListView(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
@@ -127,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       ProductCard(
                         imageUrl:
-                            'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png',
+                            'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp',
                         price: 109.95,
                         rating: 3.9,
                         reviews: 120,
@@ -183,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,
-                    mainAxisExtent: 268,
+                    mainAxisExtent: 300,
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   addRepaintBoundaries: true,

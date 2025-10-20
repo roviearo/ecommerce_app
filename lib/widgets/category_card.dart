@@ -12,7 +12,7 @@ class CategoryCard extends StatelessWidget {
       padding: const EdgeInsets.only(right: 10.0),
       child: Card(
         child: Container(
-          width: 85,
+          width: 100,
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
           child: Center(
             child: Column(
