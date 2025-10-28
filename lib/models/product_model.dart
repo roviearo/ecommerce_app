@@ -1,117 +1,63 @@
-import 'package:ecommerce_app/models/dimensions.dart';
+import 'package:ecommerce_app/models/dimensions_model.dart';
 import 'package:ecommerce_app/models/meta_model.dart';
 import 'package:ecommerce_app/models/review_model.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ProductModel extends Equatable {
-  const ProductModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.category,
-    required this.price,
-    required this.discountPercentage,
-    required this.rating,
-    required this.stock,
-    required this.tags,
-    required this.brand,
-    required this.sku,
-    required this.weight,
-    required this.dimensions,
-    required this.warrantyInformation,
-    required this.shippingInformation,
-    required this.availabilityStatus,
-    required this.reviews,
-    required this.returnPolicy,
-    required this.minimumOrderQuantity,
-    required this.meta,
-    required this.images,
-    required this.thumbnail,
-  });
+part 'product_model.freezed.dart';
+part 'product_model.g.dart';
 
-  final int? id;
-  final String? title;
-  final String? description;
-  final String? category;
-  final double? price;
-  final double? discountPercentage;
-  final double? rating;
-  final int? stock;
-  final List<String> tags;
-  final String? brand;
-  final String? sku;
-  final int? weight;
-  final DimensionsModel? dimensions;
-  final String? warrantyInformation;
-  final String? shippingInformation;
-  final String? availabilityStatus;
-  final List<ReviewModel> reviews;
-  final String? returnPolicy;
-  final int? minimumOrderQuantity;
-  final MetaModel? meta;
-  final List<String> images;
-  final String? thumbnail;
+@freezed
+abstract class ProductModel with _$ProductModel {
+  factory ProductModel({
+    required int id,
+    required String title,
+    required String description,
+    required String category,
+    required double price,
+    required double discountPercentage,
+    required double rating,
+    required int stock,
+    List<String>? tags,
+    String? brand,
+    String? sku,
+    int? weight,
+    DimensionsModel? dimensions,
+    String? warrantyInformation,
+    String? shippingInformation,
+    String? availabilityStatus,
+    List<ReviewModel>? reviews,
+    String? returnPolicy,
+    int? minimumOrderQuantity,
+    MetaModel? meta,
+    required List<String> images,
+    required String thumbnail,
+  }) = _ProductModel;
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      id: json["id"],
-      title: json["title"],
-      description: json["description"],
-      category: json["category"],
-      price: json["price"],
-      discountPercentage: json["discountPercentage"],
-      rating: json["rating"],
-      stock: json["stock"],
-      tags: json["tags"] == null
-          ? []
-          : List<String>.from(json["tags"]!.map((x) => x)),
-      brand: json["brand"],
-      sku: json["sku"],
-      weight: json["weight"],
-      dimensions: json["dimensions"] == null
-          ? null
-          : DimensionsModel.fromJson(json["dimensions"]),
-      warrantyInformation: json["warrantyInformation"],
-      shippingInformation: json["shippingInformation"],
-      availabilityStatus: json["availabilityStatus"],
-      reviews: json["reviews"] == null
-          ? []
-          : List<ReviewModel>.from(
-              json["reviews"]!.map((x) => ReviewModel.fromJson(x)),
-            ),
-      returnPolicy: json["returnPolicy"],
-      minimumOrderQuantity: json["minimumOrderQuantity"],
-      meta: json["meta"] == null ? null : MetaModel.fromJson(json["meta"]),
-      images: json["images"] == null
-          ? []
-          : List<String>.from(json["images"]!.map((x) => x)),
-      thumbnail: json["thumbnail"],
-    );
-  }
+  factory ProductModel.empty() => ProductModel(
+    id: 0,
+    title: '',
+    description: '',
+    category: '',
+    price: 0,
+    discountPercentage: 0,
+    rating: 0,
+    stock: 0,
+    tags: [],
+    brand: '',
+    sku: '',
+    weight: 0,
+    dimensions: DimensionsModel.empty(),
+    warrantyInformation: '',
+    shippingInformation: '',
+    availabilityStatus: '',
+    reviews: [],
+    returnPolicy: '',
+    minimumOrderQuantity: 0,
+    meta: MetaModel.empty(),
+    images: [],
+    thumbnail: '',
+  );
 
-  @override
-  List<Object?> get props => [
-    id,
-    title,
-    description,
-    category,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    tags,
-    brand,
-    sku,
-    weight,
-    dimensions,
-    warrantyInformation,
-    shippingInformation,
-    availabilityStatus,
-    reviews,
-    returnPolicy,
-    minimumOrderQuantity,
-    meta,
-    images,
-    thumbnail,
-  ];
+  factory ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductModelFromJson(json);
 }

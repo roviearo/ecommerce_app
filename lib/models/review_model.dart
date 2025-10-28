@@ -1,36 +1,26 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ReviewModel extends Equatable {
-  const ReviewModel({
-    required this.rating,
-    required this.comment,
-    required this.date,
-    required this.reviewerName,
-    required this.reviewerEmail,
-  });
+part 'review_model.freezed.dart';
+part 'review_model.g.dart';
 
-  final int? rating;
-  final String? comment;
-  final DateTime? date;
-  final String? reviewerName;
-  final String? reviewerEmail;
+@freezed
+abstract class ReviewModel with _$ReviewModel {
+  factory ReviewModel({
+    required int rating,
+    required String comment,
+    required DateTime date,
+    required String reviewerName,
+    required String reviewerEmail,
+  }) = _ReviewModel;
 
-  factory ReviewModel.fromJson(Map<String, dynamic> json) {
-    return ReviewModel(
-      rating: json["rating"],
-      comment: json["comment"],
-      date: DateTime.tryParse(json["date"] ?? ""),
-      reviewerName: json["reviewerName"],
-      reviewerEmail: json["reviewerEmail"],
-    );
-  }
+  factory ReviewModel.empty() => ReviewModel(
+    rating: 0,
+    comment: '',
+    date: DateTime.now(),
+    reviewerName: '',
+    reviewerEmail: '',
+  );
 
-  @override
-  List<Object?> get props => [
-    rating,
-    comment,
-    date,
-    reviewerName,
-    reviewerEmail,
-  ];
+  factory ReviewModel.fromJson(Map<String, dynamic> json) =>
+      _$ReviewModelFromJson(json);
 }

@@ -10,20 +10,40 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 10.0),
-      child: Card(
-        child: Container(
-          width: 100,
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-          child: Center(
-            child: Column(
-              children: [
-                Center(child: Image.asset(imageUrl, width: 50, height: 50)),
-                Spacer(),
-                Text(title, style: Theme.of(context).textTheme.labelMedium),
-              ],
+      child: Column(
+        children: [
+          Card(
+            elevation: .1,
+            child: Container(
+              width: 60,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 5,
+              ),
+              child: Center(
+                child: Column(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'icons/$imageUrl.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+          SizedBox(
+            width: 80,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+          ),
+        ],
       ),
     );
   }
