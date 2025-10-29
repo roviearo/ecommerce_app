@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,11 +24,15 @@ class HomeScreen extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: SizedBox(
-              height: 40,
+              height: 35,
               child: TextField(
                 style: TextStyle(fontSize: 14),
                 readOnly: true,
                 decoration: InputDecoration(
+                  hint: Text(
+                    'Search',
+                    style: TextStyle(color: Theme.of(context).disabledColor),
+                  ),
                   contentPadding: EdgeInsets.zero,
                   border: OutlineInputBorder(),
                   prefixIcon: Padding(
@@ -73,9 +78,6 @@ class HomeScreen extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.tertiaryContainer,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: ClipRRect(
@@ -113,7 +115,29 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return Center(child: Text('Error'));
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: SizedBox(
+                          height: 50,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            children: List.generate(
+                              6,
+                              (index) => Container(
+                                margin: EdgeInsets.only(right: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 50,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
@@ -135,7 +159,7 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 10.0),
                               child: ProductCard(
                                 id: listProducts[index].id,
-                                imageUrl: listProducts[index].images[0],
+                                imageUrl: listProducts[index].thumbnail,
                                 price: listProducts[index].price,
                                 rating: listProducts[index].rating,
                                 reviews: listProducts[index].reviews!.length,
@@ -146,7 +170,29 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return Center(child: Text('Error'));
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: SizedBox(
+                          height: 150,
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            children: List.generate(
+                              6,
+                              (index) => Container(
+                                margin: EdgeInsets.only(right: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 150,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
@@ -179,7 +225,7 @@ class HomeScreen extends StatelessWidget {
                           listProducts.length,
                           (index) => ProductCard(
                             id: listProducts[index].id,
-                            imageUrl: listProducts[index].images[0],
+                            imageUrl: listProducts[index].thumbnail,
                             price: listProducts[index].price,
                             rating: listProducts[index].rating,
                             reviews: listProducts[index].reviews!.length,
@@ -188,7 +234,34 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return Center(child: Text('Error'));
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: GridView(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 16,
+                                mainAxisExtent: 150,
+                              ),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          addRepaintBoundaries: true,
+                          children: List.generate(
+                            6,
+                            (index) => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              width: double.infinity,
+                              height: 150,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                 ),
