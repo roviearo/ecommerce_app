@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/blocs/category/category_bloc.dart';
 import 'package:ecommerce_app/blocs/product/product_bloc.dart';
 import 'package:ecommerce_app/cubit/detail_product/detail_product_cubit.dart';
+import 'package:ecommerce_app/cubit/products_by_category/products_by_category_cubit.dart';
 import 'package:ecommerce_app/repositories/category_repository.dart';
 import 'package:ecommerce_app/repositories/product_repository.dart';
 import 'package:ecommerce_app/utils/router.dart';
@@ -40,6 +41,11 @@ class MyApp extends StatelessWidget {
             create: (context) => CategoryBloc(
               categoryRepository: context.read<CategoryRepository>(),
             )..add(LoadAllCategoryEvent()),
+          ),
+          BlocProvider(
+            create: (context) => ProductsByCategoryCubit(
+              productRepository: context.read<ProductRepository>(),
+            ),
           ),
         ],
         child: MaterialApp.router(

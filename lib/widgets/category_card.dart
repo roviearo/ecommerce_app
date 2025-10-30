@@ -1,15 +1,27 @@
+import 'package:ecommerce_app/cubit/products_by_category/products_by_category_cubit.dart';
+import 'package:ecommerce_app/models/category_model.dart';
+import 'package:ecommerce_app/utils/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, required this.imageUrl, required this.title});
+  const CategoryCard({super.key, required this.category});
 
-  final String imageUrl;
-  final String title;
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        context.read<ProductsByCategoryCubit>().loadProductsbyCategory(
+          category.slug,
+        );
+        router.pushNamed(
+          'products_by_category',
+          queryParameters: {'category': category.slug},
+        );
+      },
       child: Column(
         children: [
           Card(
@@ -25,7 +37,7 @@ class CategoryCard extends StatelessWidget {
                   children: [
                     Center(
                       child: Image.asset(
-                        'icons/$imageUrl.png',
+                        'icons/${category.slug}.png',
                         width: 50,
                         height: 50,
                       ),
@@ -38,7 +50,7 @@ class CategoryCard extends StatelessWidget {
           SizedBox(
             width: 80,
             child: Text(
-              title,
+              category.name,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelMedium,
             ),

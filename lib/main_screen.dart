@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:ecommerce_app/screens/home_screen.dart';
 import 'package:ecommerce_app/utils/nav_model.dart';
 import 'package:ecommerce_app/widgets/nav_bar.dart';
@@ -24,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     items = [
       NavModel(page: const HomeScreen(), navKey: homeNavKey),
       NavModel(page: const Placeholder(), navKey: chatNavKey),
-      NavModel(page: const Placeholder(), navKey: cartNavKey),
+      NavModel(page: const CartScreen(), navKey: cartNavKey),
       NavModel(page: const Placeholder(), navKey: profileNavKey),
     ];
   }

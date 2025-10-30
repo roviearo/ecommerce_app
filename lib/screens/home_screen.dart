@@ -2,12 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/blocs/category/category_bloc.dart';
 import 'package:ecommerce_app/blocs/product/product_bloc.dart';
 import 'package:ecommerce_app/widgets/category_card.dart';
-import 'package:ecommerce_app/widgets/custom_icon.dart';
+import 'package:ecommerce_app/widgets/custom_app_bar.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:ecommerce_app/widgets/title_large_medium.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -18,46 +17,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: AppBar(
-          forceMaterialTransparency: true,
-          titleSpacing: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: SizedBox(
-              height: 35,
-              child: TextField(
-                style: TextStyle(fontSize: 14),
-                readOnly: true,
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Search',
-                    style: TextStyle(color: Theme.of(context).disabledColor),
-                  ),
-                  contentPadding: EdgeInsets.zero,
-                  border: OutlineInputBorder(),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: SvgPicture.asset(
-                      'icons/search.svg',
-                      colorFilter: ColorFilter.mode(
-                        Theme.of(context).colorScheme.outline,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  ),
-                  prefixIconConstraints: BoxConstraints(maxWidth: 30),
-                ),
-              ),
-            ),
-          ),
-          actionsPadding: EdgeInsets.only(right: 10),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: CustomIcon(assetUrl: 'icons/bell.svg'),
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -107,10 +67,8 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           children: List.generate(
                             6,
-                            (index) => CategoryCard(
-                              imageUrl: listCategory[index].slug,
-                              title: listCategory[index].name,
-                            ),
+                            (index) =>
+                                CategoryCard(category: listCategory[index]),
                           ),
                         ),
                       );
@@ -148,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                       final listProducts = state.listProduct;
 
                       return SizedBox(
-                        height: 300,
+                        height: 310,
                         child: ListView(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -217,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           mainAxisSpacing: 16,
                           crossAxisSpacing: 16,
-                          mainAxisExtent: 300,
+                          mainAxisExtent: 310,
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         addRepaintBoundaries: true,

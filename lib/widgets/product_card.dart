@@ -36,8 +36,8 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: MediaQuery.sizeOf(context).width * .5 - 32,
-              height: MediaQuery.sizeOf(context).width * .5 - 32,
+              width: MediaQuery.sizeOf(context).width * .5 - 16,
+              height: MediaQuery.sizeOf(context).width * .5 - 16,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border.all(color: Theme.of(context).disabledColor),

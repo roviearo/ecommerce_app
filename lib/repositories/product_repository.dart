@@ -39,10 +39,28 @@ class ProductRepository implements BaseProductRepository {
     // TODO: implement searchProducts
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<ProductModel>> getProductsbyCategory(String category) async {
+    try {
+      final response = await dio.get(
+        'https://dummyjson.com/products/category/$category',
+      );
+
+      final data = (response.data['products'] as List)
+          .map((data) => ProductModel.fromJson(data))
+          .toList();
+
+      return data;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }
 
 abstract class BaseProductRepository {
   Future<List<ProductModel>> getAllProducts();
   Future<ProductModel> getProduct(int id);
   Future<List<ProductModel>> searchProducts(String query);
+  Future<List<ProductModel>> getProductsbyCategory(String category);
 }
