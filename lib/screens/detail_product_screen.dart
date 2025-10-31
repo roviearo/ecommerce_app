@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
 import 'package:ecommerce_app/cubit/detail_product/detail_product_cubit.dart';
+import 'package:ecommerce_app/models/cart_item_model.dart';
 import 'package:ecommerce_app/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ class DetailProductScreen extends StatefulWidget {
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
   int selectedImage = 0;
+  // bool showModalBottomSheet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -406,7 +409,29 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         SizedBox(width: 10),
                         Expanded(
                           child: FilledButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) => Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.network(state.product!.thumbnail),
+                                  ],
+                                ),
+                              );
+                              context.read<CartCubit>().addItem(
+                                CartItemModel(
+                                  productId: product.id,
+                                  title: product.title,
+                                  brand: product.brand,
+                                  imageUrl: product.thumbnail,
+                                  price: product.price,
+                                  discountPercentage:
+                                      product.discountPercentage,
+                                  originalPrice: originalPrice,
+                                ),
+                              );
+                            },
                             child: Text('Add to Cart'),
                           ),
                         ),

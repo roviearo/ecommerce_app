@@ -1,8 +1,13 @@
+import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
+import 'package:ecommerce_app/models/cart_item_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductCartCard extends StatelessWidget {
-  const ProductCartCard({super.key});
+  const ProductCartCard({super.key, required this.cartItem});
+
+  final CartItemModel cartItem;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +18,16 @@ class ProductCartCard extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 8.0, top: 16),
         child: Row(
           children: [
-            Center(child: Checkbox(value: true, onChanged: (value) {})),
+            Center(
+              child: Checkbox(
+                value: cartItem.isSelected,
+                onChanged: (value) {
+                  context.read<CartCubit>().selectItem(cartItem.productId);
+                },
+              ),
+            ),
             Image.network(
-              'https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/1.webp',
+              cartItem.imageUrl,
               width: MediaQuery.sizeOf(context).width * .2,
             ),
             Expanded(
@@ -27,13 +39,13 @@ class ProductCartCard extends StatelessWidget {
                         MediaQuery.sizeOf(context).width -
                         (MediaQuery.sizeOf(context).width * .4),
                     child: Text(
-                      'Wooden Bathroom Sink With Mirror With Mirror',
+                      cartItem.title,
                       overflow: TextOverflow.clip,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),
                   Text(
-                    'Bath Trends',
+                    cartItem.brand ?? '',
                     overflow: TextOverflow.clip,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
@@ -44,12 +56,12 @@ class ProductCartCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '\$${799.99}',
+                        '\$${cartItem.price}',
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       SizedBox(width: 8),
                       Text(
-                        '\$799.99',
+                        '\$${num.parse(cartItem.originalPrice.toStringAsFixed(2))}',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           decoration: TextDecoration.lineThrough,
                           color: Theme.of(context).disabledColor,
@@ -75,14 +87,33 @@ class ProductCartCard extends StatelessWidget {
                   SizedBox(height: 5),
                   Row(
                     children: [
-                      SvgPicture.asset('icons/remove.svg'),
+                      GestureDetector(
+                        onTap: () => context.read<CartCubit>().decreaseQuantity(
+                          cartItem.productId,
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                        child: SvgPicture.asset('icons/remove.svg'),
+                      ),
                       SizedBox(width: 10),
-                      Text('1', style: TextStyle(fontSize: 18)),
+                      Text(
+                        cartItem.quantity.toString(),
+                        style: TextStyle(fontSize: 18),
+                      ),
                       SizedBox(width: 10),
-                      SvgPicture.asset('icons/add.svg'),
+                      GestureDetector(
+                        onTap: () => context.read<CartCubit>().increaseQuantity(
+                          cartItem.productId,
+                        ),
+                        behavior: HitTestBehavior.opaque,
+                        child: SvgPicture.asset('icons/add.svg'),
+                      ),
                       Expanded(child: SizedBox.shrink()),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartCubit>().removeItem(
+                            cartItem.productId,
+                          );
+                        },
                         icon: SvgPicture.asset(
                           'icons/trash.svg',
                           colorFilter: ColorFilter.mode(

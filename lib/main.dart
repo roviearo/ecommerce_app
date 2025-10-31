@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/blocs/category/category_bloc.dart';
 import 'package:ecommerce_app/blocs/product/product_bloc.dart';
+import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
 import 'package:ecommerce_app/cubit/detail_product/detail_product_cubit.dart';
 import 'package:ecommerce_app/cubit/products_by_category/products_by_category_cubit.dart';
 import 'package:ecommerce_app/repositories/category_repository.dart';
@@ -8,9 +9,17 @@ import 'package:ecommerce_app/utils/router.dart';
 import 'package:ecommerce_app/utils/simple_bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'utils/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: HydratedStorageDirectory(
+      (await getTemporaryDirectory()).path,
+    ),
+  );
   Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
@@ -47,6 +56,7 @@ class MyApp extends StatelessWidget {
               productRepository: context.read<ProductRepository>(),
             ),
           ),
+          BlocProvider(create: (context) => CartCubit()),
         ],
         child: MaterialApp.router(
           routeInformationParser: router.routeInformationParser,

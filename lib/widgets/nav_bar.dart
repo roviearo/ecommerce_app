@@ -1,4 +1,6 @@
+import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NavBar extends StatelessWidget {
@@ -72,14 +74,24 @@ class NavBar extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              "icons/$assetName.svg",
-              colorFilter: ColorFilter.mode(
-                selected
-                    ? Theme.of(context).iconTheme.color!
-                    : Theme.of(context).disabledColor,
-                BlendMode.srcIn,
-              ),
+            BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                return Badge(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  textColor: Theme.of(context).colorScheme.onPrimary,
+                  isLabelVisible: assetName == 'cart' && state.items.isNotEmpty,
+                  label: Text(state.items.length.toString()),
+                  child: SvgPicture.asset(
+                    "icons/$assetName.svg",
+                    colorFilter: ColorFilter.mode(
+                      selected
+                          ? Theme.of(context).iconTheme.color!
+                          : Theme.of(context).disabledColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                );
+              },
             ),
             Text(
               label,
