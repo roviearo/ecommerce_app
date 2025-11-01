@@ -1,11 +1,13 @@
-import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
-import 'package:ecommerce_app/cubit/detail_product/detail_product_cubit.dart';
-import 'package:ecommerce_app/models/cart_item_model.dart';
-import 'package:ecommerce_app/widgets/custom_icon.dart';
+import 'package:ecommerce_app/widgets/custom_modal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'package:ecommerce_app/cubit/cart/cart_cubit.dart';
+import 'package:ecommerce_app/cubit/detail_product/detail_product_cubit.dart';
+import 'package:ecommerce_app/models/cart_item_model.dart';
+import 'package:ecommerce_app/widgets/custom_icon.dart';
 
 class DetailProductScreen extends StatefulWidget {
   const DetailProductScreen({super.key});
@@ -412,11 +414,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             onPressed: () {
                               showModalBottomSheet(
                                 context: context,
-                                builder: (context) => Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.network(state.product!.thumbnail),
-                                  ],
+                                useSafeArea: true,
+                                isScrollControlled: true,
+                                builder: (context) => FractionallySizedBox(
+                                  heightFactor: .6,
+                                  child: CustomModalBottomSheet(
+                                    product: state.product!,
+                                  ),
                                 ),
                               );
                               context.read<CartCubit>().addItem(

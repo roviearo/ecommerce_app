@@ -8,7 +8,8 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       name: 'main',
-      builder: (context, state) => MainScreen(),
+      builder: (context, state) =>
+          MainScreen(index: state.uri.queryParameters['index']),
       routes: [
         GoRoute(
           path: 'detail_product',
