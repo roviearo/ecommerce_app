@@ -21,7 +21,6 @@ class DetailProductScreen extends StatefulWidget {
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
   int selectedImage = 0;
-  // bool showModalBottomSheet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     decoration: InputDecoration(
                       hint: Text(
                         'Search',
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).disabledColor,
                         ),
                       ),
@@ -438,7 +437,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                 useSafeArea: true,
                                 isScrollControlled: true,
                                 builder: (context) => FractionallySizedBox(
-                                  heightFactor: .6,
+                                  heightFactor: .7,
                                   child: CustomModalBottomSheet(
                                     product: state.product!,
                                   ),

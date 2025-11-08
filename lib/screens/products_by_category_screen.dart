@@ -46,9 +46,10 @@ class _ProductsByCategoryScreenState extends State<ProductsByCategoryScreen> {
                       decoration: InputDecoration(
                         hint: Text(
                           'Search',
-                          style: TextStyle(
-                            color: Theme.of(context).disabledColor,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(context).disabledColor,
+                              ),
                         ),
                         contentPadding: EdgeInsets.zero,
                         border: OutlineInputBorder(),
